@@ -24,7 +24,7 @@ test.describe('Form Validation Tests', () => {
     await formPage.fillForm({
       firstName: '123@#%',
       lastName: 'Doe',
-      email: 'abc@exapmle.com',
+      email: 'john.doe@example.com',
       password: 'Password',
       confirmPassword: 'Password'
     });
