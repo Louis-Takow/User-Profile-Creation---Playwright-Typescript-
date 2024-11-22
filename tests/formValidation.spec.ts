@@ -33,4 +33,19 @@ test.describe('Form Validation Tests', () => {
     expect(errorMessage).toContain('This field must contain only letters');  // Check if the first name field validation message appears
   });
 
+    // Test Case 3: Validate email field for invalid email formats
+    test('TC-003: Validate email field for invalid formats', async () => {
+      // Fill the form with an invalid email format
+      await formPage.fillForm({
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'abc@',
+        password: 'Password',
+        confirmPassword: 'Password'
+      });
+      await formPage.submitForm();  // Submit the form
+      const errorMessage = await formPage.getErrorMessage();  // Retrieve the error message
+      expect(errorMessage).toContain('Email is not valid');  // Verify the email error message
+    });
+  
 });
