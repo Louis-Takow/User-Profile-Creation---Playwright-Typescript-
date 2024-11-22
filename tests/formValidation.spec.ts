@@ -77,4 +77,20 @@ test.describe('Form Validation Tests', () => {
     await formPage.submitForm();  // Submit the form
   });
 
+  // Test Case 6: Validate phone number field for invalid input (non-numerical characters)
+  test('TC-006: Validate phone number field for invalid input', async () => {
+    // Fill the form with an invalid phone number
+    await formPage.fillForm({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'Password123',
+      confirmPassword: 'Password123',
+      phoneNumber: 'abc123'
+    });
+    await formPage.submitForm();  // Submit the form
+    const errorMessage = await formPage.getErrorMessage();  // Retrieve the error message
+    expect(errorMessage).toContain('Phone number must contain just numerical characters');  // Verify the phone number error
+  });
+
 });
