@@ -63,4 +63,18 @@ test.describe('Form Validation Tests', () => {
     expect(errorMessage).toContain('The password fields must match');  // Verify that the password match error appears
   });
 
+  // Test Case 5: Validate gender selection functionality
+  test('TC-005: Validate gender selection functionality', async () => {
+    // Fill the form with a selected gender
+    await formPage.fillForm({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'Password123',
+      confirmPassword: 'Password123',
+      gender: 'male'
+    });
+    await formPage.submitForm();  // Submit the form
+  });
+
 });
