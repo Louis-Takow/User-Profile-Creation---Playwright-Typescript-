@@ -138,4 +138,18 @@ test.describe('Form Validation Tests', () => {
     await formPage.submitForm();  // Submit the form
   });
 
+  // Test Case 10: Validate form submission with one mandatory field missing
+  test('TC-010: Validate submission with one mandatory field missing', async () => {
+    // Fill the form with a missing first name
+    await formPage.fillForm({
+      firstName: '',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'Password123',
+      confirmPassword: 'Password123'
+    });
+    await formPage.submitForm();  // Submit the form
+    const errorMessage = await formPage.getErrorMessage();  // Retrieve the error message
+    expect(errorMessage).toContain('Please fill in this field');  // Verify that the missing field error appears
+  });
 });
