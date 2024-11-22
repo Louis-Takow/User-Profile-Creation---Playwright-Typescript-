@@ -93,4 +93,20 @@ test.describe('Form Validation Tests', () => {
     expect(errorMessage).toContain('Phone number must contain just numerical characters');  // Verify the phone number error
   });
 
+  // Test Case 7: Validate LinkedIn URL field for invalid URLs
+  test('TC-007: Validate LinkedIn URL field for invalid URLs', async () => {
+    // Fill the form with an invalid LinkedIn URL
+    await formPage.fillForm({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'Password123',
+      confirmPassword: 'Password123',
+      linkedIn: 'example'
+    });
+    await formPage.submitForm();  // Submit the form
+    const errorMessage = await formPage.getErrorMessage();  // Retrieve the error message
+    expect(errorMessage).toContain('Please enter a valid URL');  // Verify the URL error message
+  });
+
 });
