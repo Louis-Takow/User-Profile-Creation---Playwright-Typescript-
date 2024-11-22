@@ -109,4 +109,20 @@ test.describe('Form Validation Tests', () => {
     expect(errorMessage).toContain('Please enter a valid URL');  // Verify the URL error message
   });
 
+  // Test Case 8: Test form submission with all valid inputs
+  test('TC-008: Test form submission with valid inputs', async ({page}) => {
+    // Fill the form with valid input values
+    await formPage.fillForm({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'Password123',
+      confirmPassword: 'Password123',
+      gender: 'male',
+      phoneNumber: '1234567890',
+      linkedIn: 'https://linkedin.com/in/johndoe'
+    });
+    await formPage.submitForm();  // Submit the form
+  });
+
 });
