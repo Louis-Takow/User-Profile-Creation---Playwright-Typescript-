@@ -18,5 +18,19 @@ test.describe('Form Validation Tests', () => {
     expect(errorMessage).toContain('Please fill in this field');  // Check if the error message matches the expected one
   });
 
+  // Test Case 2: Validate first name field for invalid input (non-alphabetical characters)
+  test('TC-002: Validate first name field for invalid input', async () => {
+    // Fill the form with invalid first name, valid other fields
+    await formPage.fillForm({
+      firstName: '123@#%',
+      lastName: 'Doe',
+      email: 'abc@exapmle.com',
+      password: 'Password',
+      confirmPassword: 'Password'
+    });
+    await formPage.submitForm();  // Submit the form
+    const errorMessage = await formPage.getErrorMessage();  // Retrieve the error message
+    expect(errorMessage).toContain('This field must contain only letters');  // Check if the first name field validation message appears
+  });
 
 });
