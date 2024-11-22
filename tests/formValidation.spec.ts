@@ -48,4 +48,19 @@ test.describe('Form Validation Tests', () => {
       expect(errorMessage).toContain('Email is not valid');  // Verify the email error message
     });
   
+    // Test Case 4: Validate password fields for matching values
+  test('TC-004: Validate password matching', async () => {
+    // Fill the form with mismatched password and confirm password
+    await formPage.fillForm({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'Password123',
+      confirmPassword: 'Password456'
+    });
+    await formPage.submitForm();  // Submit the form
+    const errorMessage = await formPage.getErrorMessage();  // Retrieve the error message
+    expect(errorMessage).toContain('The password fields must match');  // Verify that the password match error appears
+  });
+
 });
