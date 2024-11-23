@@ -32,7 +32,7 @@ jobs:
 
     # Run Playwright tests
     - name: Run Playwright Tests
-      run: npx playwright test tests/formValidation.spec.ts
+      run: npx playwright test
 
     # Upload Playwright test report (optional)
     - name: Upload Playwright Report
