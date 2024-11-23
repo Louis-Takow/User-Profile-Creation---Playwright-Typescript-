@@ -49,7 +49,7 @@ To run tests locally:
   ```
 
 ## Custom Scripts
-- **Run form validation tests and opens playwright reporter**
+- **Run form validation tests and open playwright reporter**
   ```bash
      npm test test:formValidation
   ```
