@@ -51,7 +51,7 @@ To run tests locally:
 ## Custom Scripts
 - **Run form validation tests and open playwright reporter**
   ```bash
-     npm test test:formValidation
+     npm run test:formValidation
   ```
 
 ## Best Practices
