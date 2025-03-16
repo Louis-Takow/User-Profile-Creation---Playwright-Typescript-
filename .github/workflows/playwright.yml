@@ -23,13 +23,28 @@ jobs:
     - name: Install system dependencies (Fix missing packages)
       run: |
         sudo apt-get update
-        sudo apt-get install -y libasound2t64 libffi-dev libx264-dev
+        sudo apt-get install -y \
+          libasound2t64 \
+          libffi-dev \
+          libx264-dev \
+          libnss3 \
+          libatk1.0-0 \
+          libatk-bridge2.0-0 \
+          libcups2 \
+          libxcomposite1 \
+          libxrandr2 \
+          libgbm1 \
+          libpango-1.0-0 \
+          libpangocairo-1.0-0 \
+          libgtk-3-0 \
+          libdrm2 \
+          libxdamage1 \
+          libxkbcommon0 \
+          libxshmfence1 \
+          libglu1-mesa
 
     - name: Install dependencies
       run: npm install
-
-    - name: Install Playwright dependencies
-      run: npx playwright install-deps
 
     - name: Install Playwright Browsers
       run: npx playwright install
