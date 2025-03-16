@@ -42,8 +42,8 @@ jobs:
           libxkbcommon0 \
           libxshmfence1 \
           libglu1-mesa \
-          libwoff1 \
-          libwoff2-1 \
+          libwoff2-1-1 \
+          libgles2-mesa-dev \
           libvpx-dev \
           libevent-dev \
           libopus-dev \
@@ -55,8 +55,7 @@ jobs:
           libsecret-1-0 \
           libhyphen0 \
           libmanette-0.2-0 \
-          libflite1 \
-          libgles2-mesa
+          libflite1 
 
     - name: Install dependencies
       run: npm install
