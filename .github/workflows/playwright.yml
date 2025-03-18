@@ -44,18 +44,16 @@ jobs:
           libegl1 \
           libpci3 \
           libdbus-glib-1-2 \
-          libwoff2dec1 \
-          libvpx7 \
+          libwoff2-dev \
+          libvpx6 \
           libevent-2.1-7 \
-          libgstgl-1.0-0 \
-          libgstcodecparsers1.0-0 \
+          gstreamer1.0-gl \
           libharfbuzz-icu0 \
           libsecret-1-0 \
           libhyphen0 \
-          libmanette0.2 \
           libflite1 \
-          libGLESv2-2 \
-          libx264-163
+          libgles2 \
+          libx264
 
     - name: Install Playwright
       run: npm ci
