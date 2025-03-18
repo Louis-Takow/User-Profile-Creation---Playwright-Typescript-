@@ -16,10 +16,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Debug Ubuntu Version
+      run: cat /etc/os-release  # Check the Ubuntu version
+
+    - name: Test libwoff2-2 Installation
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libwoff2-2  # Test if libwoff2-2 installs successfully
+
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 20.17.0
+        cache: 'npm'  # Caches dependencies for faster runs
 
     - name: Install system dependencies (Fix missing packages)
       run: |
@@ -43,7 +52,7 @@ jobs:
           libxkbcommon0 \
           libxshmfence1 \
           libglu1-mesa \
-          libwoff2-1-1 \
+          libwoff2-2 \  # Fixed: Replaced libwoff2-1-1 with libwoff2-2
           libgles2-mesa-dev \
           libvpx-dev \
           libevent-dev \
