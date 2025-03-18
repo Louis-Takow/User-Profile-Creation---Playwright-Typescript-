@@ -51,10 +51,11 @@ jobs:
     - name: Install Playwright Browsers (Chromium and Firefox only)
       run: npx playwright install chromium firefox
 
-    - name: Run tests (Chromium and Firefox only)
-      run: npx playwright test --project=firefox tests/formValidation.spec.ts
-      # Alternatively, you can also run for Chromium
-      # run: npx playwright test --project=chromium tests/formValidation.spec.ts
+    - name: Run tests on both Firefox and Chromium
+      run: |
+        npx playwright test --project=firefox tests/formValidation.spec.ts &
+        npx playwright test --project=chromium tests/formValidation.spec.ts
+        wait
 
     - name: Show Playwright Test Report
       run: npx playwright show-report
