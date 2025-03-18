@@ -44,10 +44,7 @@ jobs:
           libopus0 \
           libegl1 \
           libpci3 \
-          libdbus-glib-1-2 \
-          libwoff2-dev \
-          libx264-156 \
-          libvpx6
+          libdbus-glib-1-2
 
     - name: Install dependencies
       run: npm ci
