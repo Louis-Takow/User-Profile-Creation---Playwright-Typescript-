@@ -43,10 +43,3 @@ jobs:
       # Step 6: Run Playwright tests
       - name: Run Playwright tests
         run: npm run test:formValidation
-
-      # Step 7: Upload Playwright report as artifact (remove temporarily if you continue facing issues)
-      - name: Upload Playwright report as artifact
-        uses: actions/upload-artifact@v2 # Stable version of the upload artifact action
-        with:
-          name: playwright-report
-          path: playwright-report/
