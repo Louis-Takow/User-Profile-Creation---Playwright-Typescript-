@@ -21,52 +21,43 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Install dependencies
+    - name: Install required libraries
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          libwoff2dec1.0.2 \
-          libvpx7 \
-          libevent-2.1-7 \
+          libasound2 \
+          libatk-bridge2.0-0 \
+          libatk1.0-0 \
+          libcups2 \
+          libdbus-1-3 \
+          libgdk-pixbuf2.0-0 \
+          libnspr4 \
+          libnss3 \
+          libx11-xcb1 \
+          libxcomposite1 \
+          libxdamage1 \
+          libxrandr2 \
+          xdg-utils \
+          libwoff2-decoder1.0 \
+          libvpx6 \
+          libgstreamer1.0-0 \
+          libgstreamer-plugins-base1.0-0 \
+          libflac8 \
           libopus0 \
-          libgstallocators-1.0-0 \
-          libgstapp-1.0-0 \
-          libgstpbutils-1.0-0 \
-          libgstaudio-1.0-0 \
-          libgsttag-1.0-0 \
-          libgstvideo-1.0-0 \
-          libgstgl-1.0-0 \
-          libgstcodecparsers-1.0-0 \
-          libgstfft-1.0-0 \
-          libharfbuzz-icu0 \
-          libsecret-1-0 \
-          libhyphen0 \
-          libmanette0.2 \
-          libflite1 \
-          libflite-usenglish1 \
-          libflite-cmu-grapheme-lang1 \
-          libflite-cmu-grapheme-lex1 \
-          libflite-cmu-indic-lang1 \
-          libflite-cmu-indic-lex1 \
-          libflite-cmulex1 \
-          libflite-cmu-time-awb1 \
-          libflite-cmu-us-awb1 \
-          libflite-cmu-us-kal16 \
-          libflite-cmu-us-kal \
-          libflite-cmu-us-rms \
-          libflite-cmu-us-slt \
-          libglesv2.2 \
-          libx264
+          libx264-160 \
+          libgles2-mesa \
+          libpci3 \
+          libegl1 \
+          libdbus-glib-1-2
 
-    - name: Install Playwright dependencies
+    - name: Install dependencies
       run: npm ci
 
     - name: Install Playwright browsers
-      run: npx playwright install
+      run: npx playwright install --with-deps
 
     - name: Run tests
       run: npx playwright test tests/formValidation.spec.ts
 
     - name: Show Playwright Test Report
       run: npx playwright show-report
-
