@@ -50,7 +50,9 @@ jobs:
       run: npm ci
 
     - name: Install Playwright browsers
-      run: npx playwright install --with-deps
+      run: |
+        # Install browsers and required dependencies
+        npx playwright install --with-deps
 
     - name: Run tests
       run: npx playwright test tests/formValidation.spec.ts
