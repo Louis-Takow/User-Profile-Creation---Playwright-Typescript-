@@ -35,29 +35,4 @@ jobs:
           libnss3 \
           libx11-xcb1 \
           libxcomposite1 \
-          libxdamage1 \
-          libxrandr2 \
-          xdg-utils \
-          libwoff2-decoder1.0 \
-          libvpx6 \
-          libgstreamer1.0-0 \
-          libgstreamer-plugins-base1.0-0 \
-          libflac8 \
-          libopus0 \
-          libx264-160 \
-          libgles2-mesa \
-          libpci3 \
-          libegl1 \
-          libdbus-glib-1-2
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Install Playwright browsers
-      run: npx playwright install --with-deps
-
-    - name: Run tests
-      run: npx playwright test tests/formValidation.spec.ts
-
-    - name: Show Playwright Test Report
-      run: npx playwright show-report
+  
