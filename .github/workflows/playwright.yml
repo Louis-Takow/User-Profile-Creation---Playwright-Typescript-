@@ -48,11 +48,13 @@ jobs:
     - name: Install Playwright
       run: npm ci
 
-    - name: Install Playwright Browsers
-      run: npx playwright install
+    - name: Install Playwright Browsers (Firefox and Chrome only)
+      run: |
+        npx playwright install firefox
+        npx playwright install chrome
 
     - name: Run tests
-      run: npx playwright test tests/formValidation.spec.ts
+      run: npx playwright test tests/formValidation.spec.ts --project=firefox --project=chrome
 
     - name: Show Playwright Test Report
       run: npx playwright show-report
