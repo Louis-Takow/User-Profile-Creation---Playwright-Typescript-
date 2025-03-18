@@ -15,7 +15,7 @@ jobs:
     steps:
       # Step 1: Check out the code
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Use version v3 of checkout
 
       # Step 2: Set up Node.js
       - name: Set up Node.js
@@ -35,9 +35,9 @@ jobs:
       - name: Run Playwright tests
         run: npm run test:formValidation
 
-      # Step 6: Upload Playwright test results as artifact
+      # Step 6: Upload Playwright report as artifact
       - name: Upload Playwright report as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2  # Keep v2 of upload-artifact
         with:
           name: playwright-report
           path: playwright-report/
