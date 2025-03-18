@@ -3,91 +3,35 @@ name: Playwright Tests
 on:
   push:
     branches:
-      - main
+      - main  # Change this to your default branch if needed
+  pull_request:
+    branches:
+      - main  # Run tests on pull requests to the main branch
 
 jobs:
-  run-tests:
-    name: Run Playwright Tests
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner for GitHub Actions
+  test:
+    runs-on: ubuntu-latest  # Use an Ubuntu runner for the CI job
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2  # Checkout the code from the repository
 
-    - name: Setup Node.js
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 20.17.0
+        node-version: '16'  # Set the Node.js version, update if necessary
 
-    - name: Install system dependencies (Fix missing packages)
-      run: |
-        sudo apt-get update --fix-missing
-        sudo apt-get install -y \
-          libasound2t64 \
-          libffi-dev \
-          libx264-dev \
-          libnss3 \
-          libatk1.0-0 \
-          libatk-bridge2.0-0 \
-          libcups2 \
-          libxcomposite1 \
-          libxrandr2 \
-          libgbm1 \
-          libpango-1.0-0 \
-          libpangocairo-1.0-0 \
-          libgtk-3-0 \
-          libdrm2 \
-          libxdamage1 \
-          libxkbcommon0 \
-          libxshmfence1 \
-          libglu1-mesa \
-          libopengl0 \
-          libwoff1 \
-          woff2 \
-          libx264-164 \
-          libgles2-mesa-dev \
-          libvpx7 \
-          libevent-2.1-7 \
-          libopus0 \
-          libgstallocators-1.0-0 \
-          libgstapp-1.0-0 \
-          libgstpbutils-1.0-0 \
-          libgstaudio-1.0-0 \
-          libgsttag-1.0-0 \
-          libgstvideo-1.0-0 \
-          libgstgl-1.0-0 \
-          libgstcodecparsers-1.0-0 \
-          libgstfft-1.0-0 \
-          libharfbuzz-icu0 \
-          libsecret-1-0 \
-          libhyphen0 \
-          libmanette0.2 \
-          libflite1 \
-          libflite_usenglish1 \
-          libflite_cmu_grapheme_lang1 \
-          libflite_cmu_grapheme_lex1 \
-          libflite_cmu_indic_lang1 \
-          libflite_cmu_indic_lex1 \
-          libflite_cmulex1 \
-          libflite_cmu_time_awb1 \
-          libflite_cmu_us_awb1 \
-          libflite_cmu_us_kal16_1 \
-          libflite_cmu_us_kal1 \
-          libflite_cmu_us_rms1 \
-          libflite_cmu_us_slt1
-          
     - name: Install dependencies
-      run: npm install
+      run: |
+        npm install  # Install all dependencies defined in package.json
 
-    - name: Install Playwright Browsers
-      run: npx playwright install
+    - name: Run Playwright tests
+      run: |
+        npx playwright install  # Install browsers for Playwright
+        npm run test:formValidation  # Run the form validation tests
 
-    - name: Run Playwright Tests
-      run: npx playwright test
-
-    - name: Upload Playwright Report
-      if: always()
-      uses: actions/upload-artifact@v4
+    - name: Upload Playwright test results
+      uses: actions/upload-artifact@v3
       with:
         name: playwright-report
-        path: playwright-report
+        path: playwright-report  # Upload Playwright's test reports if needed
