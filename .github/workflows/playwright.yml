@@ -43,16 +43,7 @@ jobs:
           libopus0 \
           libegl1 \
           libpci3 \
-          libdbus-glib-1-2 \
-          libwoff2 \
-          libevent-2.1-7 \
-          gstreamer1.0-gl \
-          libharfbuzz-icu0 \
-          libsecret-1-0 \
-          libhyphen0 \
-          libflite1 \
-          libgles2 \
-          libx264-156
+          libdbus-glib-1-2
 
     - name: Install Playwright
       run: npm ci
