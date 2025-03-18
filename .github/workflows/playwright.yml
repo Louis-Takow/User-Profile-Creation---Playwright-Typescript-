@@ -1,63 +1,74 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Playwright Tests
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  run-tests:
+    name: Run Playwright Tests
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner for GitHub Actions
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - name: Set up Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
+        node-version: 20.17.0
 
-    - name: Install required libraries
+    - name: Install system dependencies (Fix missing packages)
       run: |
         sudo apt-get update
         sudo apt-get install -y \
           libasound2t64 \
-          libatk-bridge2.0-0 \
-          libatk1.0-0 \
-          libcups2 \
-          libdbus-1-3 \
-          libgdk-pixbuf2.0-0 \
-          libnspr4 \
-          libnss3 \
-          libx11-xcb1 \
-          libxcomposite1 \
-          libxdamage1 \
-          libxrandr2 \
-          xdg-utils \
-          libvpx-dev \
-          libgstreamer1.0-0 \
-          libgstreamer-plugins-base1.0-0 \
-          libopus0 \
-          libegl1 \
-          libpci3 \
-          libdbus-glib-1-2 \
           libffi-dev \
-          libx264-dev
+          libx264-dev \
+          libnss3 \
+          libatk1.0-0 \
+          libatk-bridge2.0-0 \
+          libcups2 \
+          libxcomposite1 \
+          libxrandr2 \
+          libgbm1 \
+          libpango-1.0-0 \
+          libpangocairo-1.0-0 \
+          libgtk-3-0 \
+          libdrm2 \
+          libxdamage1 \
+          libxkbcommon0 \
+          libxshmfence1 \
+          libglu1-mesa \
+          woff2  # Fixed missing dependency
+          libgles2-mesa-dev \
+          libvpx-dev \
+          libevent-dev \
+          libopus-dev \
+          gstreamer1.0-plugins-base \
+          gstreamer1.0-plugins-good \
+          gstreamer1.0-plugins-bad \
+          gstreamer1.0-libav \
+          libharfbuzz-icu0 \
+          libsecret-1-0 \
+          libhyphen0 \
+          libmanette-0.2-0 \
+          libflite1 
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
 
-    - name: Install Playwright browsers
-      run: |
-        # Install browsers and required dependencies
-        npx playwright install --with-deps
+    - name: Install Playwright Browsers
+      run: npx playwright install
 
-    - name: Run tests
-      run: npx playwright test tests/formValidation.spec.ts
+    - name: Run Playwright Tests
+      run: npx playwright test
 
-    - name: Show Playwright Test Report
-      run: npx playwright show-report
+    - name: Upload Playwright Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report
