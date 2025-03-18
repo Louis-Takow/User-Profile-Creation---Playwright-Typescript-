@@ -13,31 +13,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the code
+      # Step 1: Checkout code from the repository
       - name: Checkout code
-        uses: actions/checkout@v3  # Use version v3 of checkout
+        uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      # Step 3: Install dependencies
+      # Step 3: Cache node modules to speed up install process
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Install Playwright browsers
-      - name: Install Playwright
+      # Step 5: Install Playwright browsers
+      - name: Install Playwright Browsers
         run: npx playwright install
 
-      # Step 5: Run Playwright tests
+      # Step 6: Run Playwright tests
       - name: Run Playwright tests
         run: npm run test:formValidation
 
-      # Step 6: Upload Playwright report as artifact
+      # Step 7: Upload Playwright report as artifact (remove temporarily if you continue facing issues)
       - name: Upload Playwright report as artifact
-        uses: actions/upload-artifact@v2  # Keep v2 of upload-artifact
+        uses: actions/upload-artifact@v2 # Stable version of the upload artifact action
         with:
           name: playwright-report
           path: playwright-report/
