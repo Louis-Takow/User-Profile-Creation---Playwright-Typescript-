@@ -57,8 +57,7 @@ jobs:
         npx playwright test --project=chromium tests/formValidation.spec.ts
         wait
 
-    - name: Generate Playwright Test Report (No Server)
+    - name: Generate Playwright Test Report
       run: |
-        npx playwright show-report --output=./playwright-report
-        # Ensure the report generation completes without serving on a local server
-        echo "Report generated successfully at ./playwright-report"
+        npx playwright show-report
+        echo "Test report generated successfully"
