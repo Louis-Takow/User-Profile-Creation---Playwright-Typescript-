@@ -25,7 +25,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          libasound2 \
+          libasound2t64 \
           libatk-bridge2.0-0 \
           libatk1.0-0 \
           libcups2 \
@@ -35,4 +35,27 @@ jobs:
           libnss3 \
           libx11-xcb1 \
           libxcomposite1 \
-  
+          libxdamage1 \
+          libxrandr2 \
+          xdg-utils \
+          libvpx-dev \
+          libgstreamer1.0-0 \
+          libgstreamer-plugins-base1.0-0 \
+          libopus0 \
+          libx264 \
+          libgles2-mesa \
+          libpci3 \
+          libegl1 \
+          libdbus-glib-1-2
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+
+    - name: Run tests
+      run: npx playwright test tests/formValidation.spec.ts
+
+    - name: Show Playwright Test Report
+      run: npx playwright show-report
