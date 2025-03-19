@@ -43,21 +43,24 @@ jobs:
           libopus0 \
           libegl1 \
           libpci3 \
-          libdbus-glib-1-2
+          libdbus-glib-1-2 \
+          libwoff1 \
+          libwoff2-1 \
+          libharfbuzz-bin \
+          libgles2-mesa \
+          libxkbcommon-x11-0 \
+          libwayland-egl1 \
+          libwebp-dev \
+          libx264-dev
 
     - name: Install Playwright
       run: npm ci
 
-    - name: Install Playwright Browsers (Chromium and Firefox only)
-      run: npx playwright install chromium firefox
+    - name: Install Playwright Browsers (Chromium, Firefox, WebKit)
+      run: npx playwright install --with-deps
 
-    - name: Run tests on both Firefox and Chromium
-      run: |
-        npx playwright test --project=firefox tests/formValidation.spec.ts &
-        npx playwright test --project=chromium tests/formValidation.spec.ts
-        wait
+    - name: Run Playwright tests on all browsers
+      run: npx playwright test --project=chromium --project=firefox --project=webkit tests/formValidation.spec.ts
 
-    - name: Generate Playwright Test Report
-      run: |
-        npx playwright show-report
-        echo "Test report generated successfully"
+    - name: Show Playwright Test Report
+      run: npx playwright show-report
