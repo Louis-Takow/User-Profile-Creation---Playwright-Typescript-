@@ -48,7 +48,10 @@ jobs:
           libxkbcommon-x11-0 \
           libwayland-egl1 \
           libwebp-dev \
-          libx264-dev
+          libx264-dev \
+          libasound2 \
+          libffi8 \
+          libx264-164
 
     - name: Install Playwright
       run: npm ci
@@ -60,4 +63,4 @@ jobs:
       run: npx playwright test tests/formValidation.spec.ts
 
     - name: Show Playwright Test Report
-      run: npx playwright show-report 
+      run: npx playwright show-report
