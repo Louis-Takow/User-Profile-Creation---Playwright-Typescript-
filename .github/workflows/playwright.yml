@@ -59,6 +59,6 @@ jobs:
 
     - name: Generate Playwright Test Report
       run: |
-        npx playwright show-report --no-open
+        npx playwright test --reporter=html
         echo "Test report generated successfully"
       
