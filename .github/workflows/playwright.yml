@@ -46,10 +46,10 @@ jobs:
           libdbus-glib-1-2
 
     - name: Install Playwright
-      run: npm ci
+      run: npm ci   # Installs project dependencies from package-lock.json
 
-    - name: Install Playwright Browsers (Chromium and Firefox only)
-      run: npx playwright install chromium firefox
+    - name: Install Playwright Browsers (Chromium and Firefox)
+      run: npx playwright install chromium firefox  # Downloads required browsers
 
     - name: Run tests on both Firefox and Chromium in parallel
       run: |
@@ -64,7 +64,7 @@ jobs:
         echo "Test report generated successfully"
       
     - name: Upload Playwright Test Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4   # Uploads the test report as an artifact
       with:
-        name: playwright-report
-        path: playwright-report/
+        name: playwright-report    # Name of the uploaded artifact
+        path: playwright-report/   # Path where reports are stored
