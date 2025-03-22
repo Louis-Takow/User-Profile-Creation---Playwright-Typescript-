@@ -48,18 +48,23 @@ jobs:
     - name: Install Playwright
       run: npm ci
 
-    - name: Install Playwright Browsers (Chromium and Firefox only)
-      run: npx playwright install chromium firefox
+    - name: Install Playwright Browsers (Chromium, Firefox, WebKit)
+      run: npx playwright install chromium firefox webkit
 
-    - name: Run tests on both Firefox and Chromium in parallel
+    - name: Run tests on all browsers in parallel
       run: |
         npx playwright test --project=firefox tests/formValidation.spec.ts &
         npx playwright test --project=chromium tests/formValidation.spec.ts &
+        npx playwright test --project=webkit tests/formValidation.spec.ts &
         wait
 
-    - name: Generate Playwright Test Report
+    - name: Generate Playwright Test Report for all browsers
       run: |
-        npx playwright test --project=firefox --reporter=html
-        npx playwright test --project=chromium --reporter=html
+        npx playwright test --reporter=html
         echo "Test report generated successfully"
-      
+
+    - name: Upload Playwright Test Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: playwright-report
+        path: playwright-report/
