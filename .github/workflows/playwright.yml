@@ -1,25 +1,25 @@
-name: Playwright Tests
+name: Playwright Tests # Defines the name of the GitHub Actions workflow
 
 on:
   push:
     branches:
-      - main
+      - main      # Triggers workflow when code is pushed to the main branch
   pull_request:
     branches:
-      - main
+      - main   # Triggers workflow on pull requests targeting the main branch
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Specifies the runner environment (latest Ubuntu)
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2  # Clones the repository into the runner
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3  # Installs Node.js environment
       with:
-        node-version: '16'
+        node-version: '16'  # Specifies Node.js version
 
     - name: Install required libraries
       run: |
