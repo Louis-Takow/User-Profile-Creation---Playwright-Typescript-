@@ -24,7 +24,7 @@ jobs:
       - name: Install required libraries
         run: |
           sudo apt-get update  # Updates package lists
-          sudo apt-get install -y \  # Installs system dependencies needed for browsers
+          sudo apt-get install -y \ 
             libatk-bridge2.0-0 \
             libatk1.0-0 \
             libcups2 \
