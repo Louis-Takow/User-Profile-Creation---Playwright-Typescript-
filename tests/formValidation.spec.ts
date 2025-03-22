@@ -151,5 +151,5 @@ test.describe('Form Validation Tests', () => {
     await formPage.submitForm();  // Submit the form
     const errorMessage = await formPage.getErrorMessage();  // Retrieve the error message
     expect(errorMessage).toContain('Please fill in this field');  // Verify that the missing field error appears
-  });
+  }); 
 });
