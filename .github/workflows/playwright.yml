@@ -60,4 +60,4 @@ jobs:
       run: npx playwright test tests/formValidation.spec.ts
 
     - name: Show Playwright Test Report
-      run: npx playwright show-report
+      run: npx playwright show-report 
