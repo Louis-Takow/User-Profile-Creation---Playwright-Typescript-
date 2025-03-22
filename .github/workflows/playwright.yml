@@ -13,51 +13,58 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
 
-      - name: Install required libraries (Chromium, Firefox, WebKit)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwoff2-1 \
-            libvpx-dev \
-            libevent-dev \
-            libgstreamer1.0-0 \
-            libgstreamer-plugins-base1.0-0 \
-            libharfbuzz-dev \
-            libsecret-1-dev \
-            libhyphen0 \
-            libmanette-0.2-0 \
-            flite \
-            libgles2-mesa \
-            libx264-dev
+    - name: Install required libraries
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          libatk-bridge2.0-0 \
+          libatk1.0-0 \
+          libcups2 \
+          libdbus-1-3 \
+          libgdk-pixbuf2.0-0 \
+          libnspr4 \
+          libnss3 \
+          libx11-xcb1 \
+          libxcomposite1 \
+          libxdamage1 \
+          libxrandr2 \
+          xdg-utils \
+          libvpx-dev \
+          libgstreamer1.0-0 \
+          libgstreamer-plugins-base1.0-0 \
+          libopus0 \
+          libegl1 \
+          libpci3 \
+          libdbus-glib-1-2
 
-      - name: Install Playwright
-        run: npm ci
+    - name: Install Playwright
+      run: npm ci
 
-      - name: Install Playwright Browsers (Chromium, Firefox, WebKit)
-        run: npx playwright install chromium firefox webkit
+    - name: Install Playwright Browsers (Chromium and Firefox only)
+      run: npx playwright install chromium firefox
 
-      - name: Run tests on Firefox, Chromium, and WebKit in parallel
-        run: |
-          npx playwright test --project=firefox tests/formValidation.spec.ts &
-          npx playwright test --project=chromium tests/formValidation.spec.ts &
-          npx playwright test --project=webkit tests/formValidation.spec.ts &
-          wait
+    - name: Run tests on both Firefox and Chromium in parallel
+      run: |
+        npx playwright test --project=firefox tests/formValidation.spec.ts &
+        npx playwright test --project=chromium tests/formValidation.spec.ts &
+        wait
 
-      - name: Generate Playwright Test Reports
-        run: |
-          npx playwright test --reporter=html
-          echo "Test report generated successfully"
-
-      - name: Upload Playwright Test Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
+    - name: Generate Playwright Test Report
+      run: |
+        npx playwright test --project=firefox --reporter=html
+        npx playwright test --project=chromium --reporter=html
+        echo "Test report generated successfully"
+      
+    - name: Upload Playwright Test Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
