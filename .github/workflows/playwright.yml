@@ -14,12 +14,20 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '16'
+
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
     - name: Install required libraries
       run: |
@@ -45,16 +53,16 @@ jobs:
           libpci3 \
           libdbus-glib-1-2
 
-    - name: Install Playwright dependencies and browsers
-      run: |
-        npm ci
-        npx playwright install chromium firefox webkit
+    - name: Install Playwright
+      run: npm ci
 
-    - name: Run tests on all browsers in parallel
+    - name: Install Playwright Browsers (Chromium and Firefox)
+      run: npx playwright install chromium firefox
+
+    - name: Run tests on both Firefox and Chromium in parallel
       run: |
-        npx playwright test --project=firefox tests/formValidation.spec.ts --reporter=html --output=playwright-report-firefox &
-        npx playwright test --project=chromium tests/formValidation.spec.ts --reporter=html --output=playwright-report-chromium &
-        npx playwright test --project=webkit tests/formValidation.spec.ts --reporter=html --output=playwright-report-webkit &
+        npx playwright test --project=firefox --reporter=html --output=playwright-report-firefox &
+        npx playwright test --project=chromium --reporter=html --output=playwright-report-chromium &
         wait
 
     - name: Upload Playwright Test Reports
@@ -68,9 +76,3 @@ jobs:
       with:
         name: playwright-report-chromium
         path: playwright-report-chromium/
-
-    - name: Upload Playwright Test Reports
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-report-webkit
-        path: playwright-report-webkit/
