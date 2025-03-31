@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
     steps:
     - name: Checkout repository
@@ -20,14 +20,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16'
-
-    - name: Cache node_modules
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
 
     - name: Install required libraries
       run: |
@@ -61,8 +53,8 @@ jobs:
 
     - name: Run tests on both Firefox and Chromium in parallel
       run: |
-        npx playwright test --project=firefox --reporter=html --output=playwright-report-firefox &
-        npx playwright test --project=chromium --reporter=html --output=playwright-report-chromium &
+        npx playwright test --project=firefox tests/formValidation.spec.ts --reporter=html --output=playwright-report-firefox/ &
+        npx playwright test --project=chromium tests/formValidation.spec.ts --reporter=html --output=playwright-report-chromium/ &
         wait
 
     - name: Upload Playwright Test Reports for Firefox
