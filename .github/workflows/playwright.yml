@@ -44,30 +44,20 @@ jobs:
           libegl1 \
           libpci3 \
           libdbus-glib-1-2 \
-          libwoff2dec1 \
-          libvpx7 \
+          libwoff2-1.0.2 \
+          libvpx6 \
           libevent-2.1-7 \
-          libgstgl-1.0-0 \
-          libgstcodecparsers1.0-0 \
-          libharfbuzz-icu0 \
+          libgst-gl-1.0-0 \
+          libgst-plugins-base1.0-0 \
+          libharfbuzz0b \
           libsecret-1-0 \
           libhyphen0 \
           libmanette0.2 \
-          libflite1 \
-          libflite_usenglish1 \
-          libflite_cmu_grapheme_lang1 \
-          libflite_cmu_grapheme_lex1 \
-          libflite_cmu_indic_lang1 \
-          libflite_cmu_indic_lex1 \
-          libflite_cmulex1 \
-          libflite_cmu_time_awb1 \
-          libflite_cmu_us_awb1 \
-          libflite_cmu_us_kal16_1 \
-          libflite_cmu_us_kal1 \
-          libflite_cmu_us_rms1 \
-          libflite_cmu_us_slt1 \
+          flite \
           libgles2 \
-          libx264
+          libx264-dev \
+          libx265-dev \
+          libvpx5
 
     - name: Install Playwright
       run: npm ci
