@@ -53,28 +53,18 @@ jobs:
 
     - name: Run tests on both Firefox and Chromium in parallel
       run: |
-        npx playwright test --project=firefox tests/formValidation.spec.ts --reporter=html --output=playwright-report-firefox/ &
-        npx playwright test --project=chromium tests/formValidation.spec.ts --reporter=html --output=playwright-report-chromium/ &
+        npx playwright test --project=firefox tests/formValidation.spec.ts &
+        npx playwright test --project=chromium tests/formValidation.spec.ts &
         wait
 
-    - name: Check and list files for Firefox report
+    - name: Generate Playwright Test Report
       run: |
-        echo "Listing files in playwright-report-firefox directory:"
-        ls -l playwright-report-firefox/
-
-    - name: Check and list files for Chromium report
-      run: |
-        echo "Listing files in playwright-report-chromium directory:"
-        ls -l playwright-report-chromium/
-
-    - name: Upload Playwright Test Report for Firefox
+        npx playwright test --project=firefox --reporter=html
+        npx playwright test --project=chromium --reporter=html
+        echo "Test report generated successfully"
+      
+    - name: Upload Playwright Test Report
       uses: actions/upload-artifact@v4   # Uploads the test report as an artifact
       with:
-        name: playwright-report-firefox    # Name of the uploaded artifact for Firefox
-        path: playwright-report-firefox/   # Path where Firefox reports are stored
-
-    - name: Upload Playwright Test Report for Chromium
-      uses: actions/upload-artifact@v4   # Uploads the test report as an artifact
-      with:
-        name: playwright-report-chromium    # Name of the uploaded artifact for Chromium
-        path: playwright-report-chromium/   # Path where Chromium reports are stored
+        name: playwright-report    # Name of the uploaded artifact
+        path: playwright-report/   # Path where reports are stored
