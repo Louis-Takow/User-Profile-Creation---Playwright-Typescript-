@@ -57,6 +57,11 @@ jobs:
         npx playwright test --project=chromium tests/formValidation.spec.ts & 
         wait
 
+    - name: Create directories for reports
+      run: |
+        mkdir -p playwright-report-firefox
+        mkdir -p playwright-report-chromium
+
     - name: Generate Playwright Test Report for Firefox
       run: |
         npx playwright test --project=firefox --reporter=html --output=playwright-report-firefox/
