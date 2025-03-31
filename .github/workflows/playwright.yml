@@ -1,25 +1,25 @@
-name: Playwright Tests
+name: Playwright Tests # Defines the name of the GitHub Actions workflow
 
 on:
   push:
     branches:
-      - main
+      - main      # Triggers workflow when code is pushed to the main branch
   pull_request:
     branches:
-      - main
+      - main   # Triggers workflow on pull requests targeting the main branch
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest  # Specifies the runner environment (latest Ubuntu)
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2  # Clones the repository into the runner
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3  # Installs Node.js environment
       with:
-        node-version: '16'
+        node-version: '16'  # Specifies Node.js version
 
     - name: Install required libraries
       run: |
@@ -46,25 +46,35 @@ jobs:
           libdbus-glib-1-2
 
     - name: Install Playwright
-      run: npm ci
+      run: npm ci   # Installs project dependencies from package-lock.json
 
     - name: Install Playwright Browsers (Chromium and Firefox)
-      run: npx playwright install chromium firefox
+      run: npx playwright install chromium firefox  # Downloads required browsers
 
     - name: Run tests on both Firefox and Chromium in parallel
       run: |
-        npx playwright test --project=firefox tests/formValidation.spec.ts --reporter=html --output=playwright-report-firefox/ &
-        npx playwright test --project=chromium tests/formValidation.spec.ts --reporter=html --output=playwright-report-chromium/ &
+        npx playwright test --project=firefox tests/formValidation.spec.ts & 
+        npx playwright test --project=chromium tests/formValidation.spec.ts & 
         wait
 
-    - name: Upload Playwright Test Reports for Firefox
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-report-firefox
-        path: playwright-report-firefox/
+    - name: Generate Playwright Test Report for Firefox
+      run: |
+        npx playwright test --project=firefox --reporter=html --output=playwright-report-firefox/
+        echo "Firefox test report generated successfully"
 
-    - name: Upload Playwright Test Reports for Chromium
-      uses: actions/upload-artifact@v4
+    - name: Generate Playwright Test Report for Chromium
+      run: |
+        npx playwright test --project=chromium --reporter=html --output=playwright-report-chromium/
+        echo "Chromium test report generated successfully"
+
+    - name: Upload Playwright Test Report for Firefox
+      uses: actions/upload-artifact@v4   # Uploads the test report as an artifact
       with:
-        name: playwright-report-chromium
-        path: playwright-report-chromium/
+        name: playwright-report-firefox    # Name of the uploaded artifact for Firefox
+        path: playwright-report-firefox/   # Path where Firefox reports are stored
+
+    - name: Upload Playwright Test Report for Chromium
+      uses: actions/upload-artifact@v4   # Uploads the test report as an artifact
+      with:
+        name: playwright-report-chromium    # Name of the uploaded artifact for Chromium
+        path: playwright-report-chromium/   # Path where Chromium reports are stored
